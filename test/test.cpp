@@ -110,3 +110,17 @@ TEST_F(MyGrepTest, NoGrepFound)
 
     grep_.grep(keyword, fsRoot);
 }
+
+TEST_F(MyGrepTest, GrepOnBadPath)
+{
+    const std::string keyword = "KEYWORD";
+    const std::string badPath = fsRoot + "/" + "badPath.txt";
+    if (std::filesystem::exists(badPath))
+    {
+        std::filesystem::remove(badPath);
+    }
+    ASSERT_FALSE(std::filesystem::exists(badPath));
+
+    EXPECT_CALL(*executor_, execute(testing::_, testing::_)).Times(0);
+    grep_.grep(keyword, badPath);
+}

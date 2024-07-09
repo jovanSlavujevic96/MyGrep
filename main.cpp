@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    MyGrep myGrep(new Printer());
+    MyGrep myGrep(std::make_unique<Printer>());
 
 
     using std::chrono::high_resolution_clock;

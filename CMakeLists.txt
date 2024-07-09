@@ -5,7 +5,17 @@ set(CMAKE_CXX_STANDAR 17)
 
 project(my_grep)
 
-add_executable(my_grep main.cpp)
-
+add_library(my_grep_api STATIC
+    "my_grep_api/IActionExecutor.h"
+    "my_grep_api/Printer.h"
+    "my_grep_api/MyGrep.h"
+    "my_grep_api/MyGrep.cpp"
+    )
 find_package (Threads REQUIRED)
-target_link_libraries(my_grep Threads::Threads)
+target_link_libraries(my_grep_api PUBLIC Threads::Threads)
+
+add_executable(my_grep main.cpp)
+target_link_libraries(my_grep my_grep_api)
+
+add_subdirectory(test)
+
